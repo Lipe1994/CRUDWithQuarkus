@@ -1,78 +1,99 @@
-# ferreira_api
+# Projeto CRUD com Quarkus
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+Este projeto é uma implementação básica de um CRUD (Create, Read, Update, Delete) utilizando o framework Quarkus. Ele foi desenvolvido como uma experiência de aprendizagem e segue a abordagem apresentada no vídeo do canal [Build & RUM](https://www.youtube.com/watch?v=osGxaQ8ekTE).
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+## Funcionalidades
 
-## Running the application in dev mode
+O CRUD implementa operações básicas para gerenciar usuários. Os seguintes endpoints estão disponíveis:
 
-You can run your application in dev mode that enables live coding using:
+### 1. Listar Usuários
 
-```shell script
-./mvnw compile quarkus:dev
+- **Endpoint:** `GET /users`
+- **Descrição:** Retorna uma lista paginada de usuários.
+- **Parâmetros:**
+    - `page` (opcional): Número da página para paginamento (padrão é 0).
+    - `pageSize` (opcional): Número de usuários por página (padrão é 10).
+- **Resposta:** Lista de usuários.
+
+```http
+GET /users?page=0&pageSize=10
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+### 2. Buscar Usuário por ID
 
-## Packaging and running the application
+- **Endpoint:** `GET /users/{id}`
+- **Descrição:** Retorna um usuário específico com base no ID fornecido.
+- **Parâmetros:**
+    - `id`: ID do usuário a ser buscado.
+- **Resposta:** Detalhes do usuário.
 
-The application can be packaged using:
-
-```shell script
-./mvnw package
+```http
+GET /users/{id}
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+### 3. Criar Novo Usuário
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+- **Endpoint:** `POST /users`
+- **Descrição:** Cria um novo usuário com base nas informações fornecidas.
+- **Corpo da Requisição:** Dados do novo usuário.
+- **Resposta:** Usuário criado.
 
-If you want to build an _über-jar_, execute the following command:
+```http
+POST /users
+Content-Type: application/json
 
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
+{
+  "username": "Nome do Usuário",
+}
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+### 4. Atualizar Usuário
 
-## Creating a native executable
+- **Endpoint:** `PUT /users/{id}`
+- **Descrição:** Atualiza as informações de um usuário existente.
+- **Parâmetros:**
+    - `id`: ID do usuário a ser atualizado.
+- **Corpo da Requisição:** Dados atualizados do usuário.
+- **Resposta:** Usuário atualizado.
 
-You can create a native executable using:
+```http
+PUT /users/{id}
+Content-Type: application/json
 
-```shell script
-./mvnw package -Dnative
+{
+  "username": "Novo Nome do Usuário",
+}
 ```
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+### 5. Excluir Usuário
 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
+- **Endpoint:** `DELETE /users/{id}`
+- **Descrição:** Exclui um usuário com base no ID fornecido.
+- **Parâmetros:**
+    - `id`: ID do usuário a ser excluído.
+- **Resposta:** Status da operação.
+
+```http
+DELETE /users/{id}
 ```
 
-You can then execute your native executable with: `./target/ferreira_api-1.0.0-SNAPSHOT-runner`
+## Como Executar o Projeto
 
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
+1. **Clonar o Repositório:**
 
-## Related Guides
+   ```bash
+   git clone https://github.com/Lipe1994/CRUDWithQuarkus.git
+   cd CRUDWithQuarkus
+   ```
 
-- REST ([guide](https://quarkus.io/guides/rest)): A Jakarta REST implementation utilizing build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.
-- REST Jackson ([guide](https://quarkus.io/guides/rest#json-serialisation)): Jackson serialization support for Quarkus REST. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it
-- Hibernate ORM with Panache ([guide](https://quarkus.io/guides/hibernate-orm-panache)): Simplify your persistence code for Hibernate ORM via the active record or the repository pattern
-- JDBC Driver - MySQL ([guide](https://quarkus.io/guides/datasource)): Connect to the MySQL database via JDBC
+2. **Compilar e Executar o Projeto:**
 
-## Provided Code
+   Certifique-se de ter o quarkus configurado
 
-### Hibernate ORM
+   ```bash
+   quarkus dev
+   ```
 
-Create your first JPA entity
+3. **Acessar a Aplicação:**
 
-[Related guide section...](https://quarkus.io/guides/hibernate-orm)
-
-[Related Hibernate with Panache section...](https://quarkus.io/guides/hibernate-orm-panache)
-
-
-### REST
-
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+   A aplicação estará disponível em `http://localhost:8080`.
