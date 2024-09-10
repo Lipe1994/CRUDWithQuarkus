@@ -43,7 +43,7 @@ POST /users
 Content-Type: application/json
 
 {
-  "username": "Nome do Usuário",
+  "username": "Nome do Usuário"
 }
 ```
 
@@ -61,7 +61,7 @@ PUT /users/{id}
 Content-Type: application/json
 
 {
-  "username": "Novo Nome do Usuário",
+  "username": "Novo Nome do Usuário"
 }
 ```
 
